@@ -1,0 +1,757 @@
+{
+	"info": {
+		"_postman_id": "49d87442-bc31-4def-acc4-fd8e203cedcc",
+		"name": "FounderAndLightning",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "VerifyCreateUserAPI",
+			"item": [
+				{
+					"name": "POST_CreateUserWithValidData",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"var no = Math.random().toString(10).substring();\r",
+									"var newEmailId = \"Jyoti\"+ no+ \"@gmail.com\"\r",
+									"pm.environment.set(\"newEmailId\", newEmailId);"
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(201);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Verify response message is created\", function () {\r",
+									"    pm.response.to.have.status(\"Created\");\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Verify the response time\", function(){\r",
+									"    pm.expect(pm.response.responseTime).to.be.below(500)  \r",
+									"});\r",
+									"\r",
+									"pm.test(\"Verify email id field\", function(){\r",
+									"    const responseBody = pm.response.json();\r",
+									"    pm.expect(responseBody.email).to.eql(pm.environment.get(\"newEmailId\"));\r",
+									"\r",
+									"});\r",
+									"\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer fd5a41b10af45578fa7bef6ce44d9a12f4065943beb89b6d32d4ce2d724c3f7f",
+								"type": "default"
+							},
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "default"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "default"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"name\":\"Jyoti\",\r\n  \"gender\":\"Male\",\r\n  \"email\":\"{{newEmailId}}\",\r\n  \"status\":\"active\"\r\n\r\n\r\n\r\n\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/public/v2/users",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"public",
+								"v2",
+								"users"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "POST_CreateUserWithoutAuthorizationInHeader",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"var no = Math.random().toString(10).substring();\r",
+									"var newEmailId = \"Jyoti\"+ no+ \"@gmail.com\"\r",
+									"pm.environment.set(\"newEmailId\", newEmailId);"
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 401\", function () {\r",
+									"    pm.response.to.have.status(401);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Verify response message is Unauthorized\", function () {\r",
+									"    pm.response.to.have.status(\"Unauthorized\");\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Verify the response time for unauthorized request\", function(){\r",
+									"    pm.expect(pm.response.responseTime).to.be.below(500)  \r",
+									"});\r",
+									"\r",
+									"pm.test(\"Verify response body message\", function(){\r",
+									"    const responseBody = pm.response.json();\r",
+									"    pm.expect(responseBody.message).to.eql(\"Authentication failed\");\r",
+									"});\r",
+									"\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer fd5a41b10af45578fa7bef6ce44d9a12f4065943beb89b6d32d4ce2d724c3f7f",
+								"type": "default",
+								"disabled": true
+							},
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "default"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "default"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"name\":\"Jyoti\",\r\n  \"gender\":\"Male\",\r\n  \"email\":\"{{newEmailId}}\",\r\n  \"status\":\"active\"\r\n\r\n\r\n\r\n\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/public/v2/users",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"public",
+								"v2",
+								"users"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "POST_CreateUserWithInvalidValueInHeader",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"var no = Math.random().toString(10).substring();\r",
+									"var newEmailId = \"Jyoti\"+ no+ \"@gmail.com\"\r",
+									"pm.environment.set(\"newEmailId\", newEmailId);"
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 401\", function () {\r",
+									"    pm.response.to.have.status(401);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Verify response message is Unauthorized\", function () {\r",
+									"    pm.response.to.have.status(\"Unauthorized\");\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Verify the response time for unauthorized request\", function(){\r",
+									"    pm.expect(pm.response.responseTime).to.be.below(500)  \r",
+									"});\r",
+									"\r",
+									"pm.test(\"Verify response body message\", function(){\r",
+									"    const responseBody = pm.response.json();\r",
+									"    pm.expect(responseBody.message).to.eql(\"Authentication failed\");\r",
+									"});\r",
+									"\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer fd5a41b10af45578fa7bef6ce44d9a12f4065943beb89b6d32d4ce2d724c3f7f",
+								"type": "default",
+								"disabled": true
+							},
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "default"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "default"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"name\":\"Jyoti\",\r\n  \"gender\":\"Male\",\r\n  \"email\":\"{{newEmailId}}\",\r\n  \"status\":\"active\"\r\n\r\n\r\n\r\n\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/public/v2/users",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"public",
+								"v2",
+								"users"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "POST_CreateUserWithInvalidEndPoint",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"var no = Math.random().toString(10).substring();\r",
+									"var newEmailId = \"Jyoti\"+ no+ \"@gmail.com\"\r",
+									"pm.environment.set(\"newEmailId\", newEmailId);"
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 401\", function () {\r",
+									"    pm.response.to.have.status(401);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Verify response message is Unauthorized\", function () {\r",
+									"    pm.response.to.have.status(\"Unauthorized\");\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Verify the response time for unauthorized request\", function(){\r",
+									"    pm.expect(pm.response.responseTime).to.be.below(500)  \r",
+									"});\r",
+									"\r",
+									"pm.test(\"Verify response body message\", function(){\r",
+									"    const responseBody = pm.response.json();\r",
+									"    pm.expect(responseBody.message).to.eql(\"Authentication failed\");\r",
+									"});\r",
+									"\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer fd5a41b10af45578fa7bef6ce44d9a12f4065943beb89b6d32d4ce2d724c3f7f",
+								"type": "default",
+								"disabled": true
+							},
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "default"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "default"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"name\":\"Jyoti\",\r\n  \"gender\":\"Male\",\r\n  \"email\":\"{{newEmailId}}\",\r\n  \"status\":\"active\"\r\n\r\n\r\n\r\n\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/public/v2/users",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"public",
+								"v2",
+								"users"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "POST_CreateUserWithBlankData",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"var no = Math.random().toString(10).substring();\r",
+									"var newEmailId = \"\"\r",
+									"pm.environment.set(\"newEmailId\", newEmailId);"
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 422\", function () {\r",
+									"    pm.response.to.have.status(422);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Verify response message is Unprocessable Entity\", function () {\r",
+									"    pm.response.to.have.status(\"Unprocessable Entity\");\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Verify the response time\", function(){\r",
+									"    pm.expect(pm.response.responseTime).to.be.below(500)  \r",
+									"});\r",
+									"\r",
+									"pm.test(\"Verify error message displayed as email can't be blank\", function(){\r",
+									"    const responseBody = pm.response.json();\r",
+									"    pm.expect(responseBody[0].field).to.eql(\"email\");\r",
+									"    pm.expect(responseBody[0].message).to.eql(\"can't be blank\");\r",
+									"\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Verify error message displayed as Name can't be blank\", function(){\r",
+									"    const responseBody = pm.response.json();\r",
+									"    pm.expect(responseBody[0].field).to.eql(\"name\");\r",
+									"    pm.expect(responseBody[0].message).to.eql(\"can't be blank\");\r",
+									"\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Verify error message displayed as Name can't be blank , can be male or female\", function(){\r",
+									"    const responseBody = pm.response.json();\r",
+									"    pm.expect(responseBody[0].field).to.eql(\"gender\");\r",
+									"    pm.expect(responseBody[0].message).to.eql(\"can't be blank, can be male or female\");\r",
+									"\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Verify error message displayed as Name can't be status\", function(){\r",
+									"    const responseBody = pm.response.json();\r",
+									"    pm.expect(responseBody[0].field).to.eql(\"status\");\r",
+									"    pm.expect(responseBody[0].message).to.eql(\"can't be blank\");\r",
+									"\r",
+									"});\r",
+									"\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer fd5a41b10af45578fa7bef6ce44d9a12f4065943beb89b6d32d4ce2d724c3f7f",
+								"type": "default"
+							},
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "default"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "default"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"name\":\"\",\r\n  \"gender\":\"\",\r\n  \"email\":\"{{newEmailId}}\",\r\n  \"status\":\"\"\r\n\r\n\r\n\r\n\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/public/v2/users",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"public",
+								"v2",
+								"users"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "POST_CreateUserwithInvaidEmailId",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"var no = Math.random().toString(10).substring();\r",
+									"var newEmailId = \"Jyoti\"+ no+ \"@gmail.com\"\r",
+									"pm.environment.set(\"newEmailId\", newEmailId);"
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(201);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Verify response message is created\", function () {\r",
+									"    pm.response.to.have.status(\"Created\");\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Verify the response time\", function(){\r",
+									"    pm.expect(pm.response.responseTime).to.be.below(500)  \r",
+									"});\r",
+									"\r",
+									"pm.test(\"Verify email id field\", function(){\r",
+									"    const responseBody = pm.response.json();\r",
+									"    pm.expect(responseBody.email).to.eql(pm.environment.get(\"newEmailId\"));\r",
+									"\r",
+									"});\r",
+									"\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer fd5a41b10af45578fa7bef6ce44d9a12f4065943beb89b6d32d4ce2d724c3f7f",
+								"type": "default"
+							},
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "default"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "default"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"name\":\"Jyoti\",\r\n  \"gender\":\"Male\",\r\n  \"email\":\"{{newEmailId}}\",\r\n  \"status\":\"active\"\r\n\r\n\r\n\r\n\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/public/v2/users",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"public",
+								"v2",
+								"users"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "VerifyListUserAPI",
+			"item": [
+				{
+					"name": "GET_UserListWithValidData",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200 for list of user\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Verify response message is OK for list of user\", function () {\r",
+									"    pm.response.to.have.status(\"OK\");\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Verify the response time for list of users\", function(){\r",
+									"    pm.expect(pm.response.responseTime).to.be.below(500)  \r",
+									"});\r",
+									"\r",
+									"\r",
+									"pm.test(\"Verify the requested user contain name as Jyoti\", function(){\r",
+									"    const responseBody = pm.response.json();\r",
+									"    pm.expect(responseBody[0].name).to.eql(\"Jyoti\");\r",
+									"});\r",
+									"\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "default"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "default"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer fd5a41b10af45578fa7bef6ce44d9a12f4065943beb89b6d32d4ce2d724c3f7f",
+								"type": "default"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/public/v2/users",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"public",
+								"v2",
+								"users"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GET_ListUserWithInvalidHeaders",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 401 for list of user\", function () {\r",
+									"    pm.response.to.have.status(401);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Verify response message is Unauthorized for list of user\", function () {\r",
+									"    pm.response.to.have.status(\"Unauthorized\");\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Verify the response time for list of users\", function(){\r",
+									"    pm.expect(pm.response.responseTime).to.be.below(500)  \r",
+									"});\r",
+									"\r",
+									"\r",
+									"pm.test(\"Verify response body message\", function(){\r",
+									"    const responseBody = pm.response.json();\r",
+									"    pm.expect(responseBody.message).to.eql(\"Authentication failed\");\r",
+									"});\r",
+									"\r",
+									"\r",
+									"\r",
+									"pm.test(\"Verify the requested user contain name as Jyoti\", function(){\r",
+									"    const responseBody = pm.response.json();\r",
+									"    pm.expect(responseBody[0].name).to.eql(\"Jyoti\");\r",
+									"});\r",
+									"\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "default"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "default"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer fd5a41b10af45578fa7bef6ce44d9a12f4065943beb89b6d32d4ce2d724c3f7f",
+								"type": "default"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/public/v2/users",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"public",
+								"v2",
+								"users"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GET_ListUserWithoutHeaders",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 401 for list of user\", function () {\r",
+									"    pm.response.to.have.status(401);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Verify response message is Unauthorized for list of user\", function () {\r",
+									"    pm.response.to.have.status(\"Unauthorized\");\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Verify the response time for list of users\", function(){\r",
+									"    pm.expect(pm.response.responseTime).to.be.below(500)  \r",
+									"});\r",
+									"\r",
+									"\r",
+									"pm.test(\"Verify response body message\", function(){\r",
+									"    const responseBody = pm.response.json();\r",
+									"    pm.expect(responseBody.message).to.eql(\"Authentication failed\");\r",
+									"});\r",
+									"\r",
+									"\r",
+									"\r",
+									"pm.test(\"Verify the requested user contain name as Jyoti\", function(){\r",
+									"    const responseBody = pm.response.json();\r",
+									"    pm.expect(responseBody[0].name).to.eql(\"Jyoti\");\r",
+									"});\r",
+									"\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "default"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "default"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer fd5a41b10af45578fa7bef6ce44d9a12f4065943beb89b6d32d4ce2d724c3f7f",
+								"type": "default"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/public/v2/users",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"public",
+								"v2",
+								"users"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	],
+	"variable": [
+		{
+			"key": "baseUrl",
+			"value": "https://gorest.co.in"
+		}
+	]
+}
